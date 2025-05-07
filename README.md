@@ -15,25 +15,36 @@
 ## 2. Project Summary
 
 
-Device Description
+Device Description: The Tennis Swing Trajectory Tracker is a compact IoT device that attaches to a tennis racket to record, display, and analyze swing motion in real-time. It provides immediate visual feedback, stores swing data, and enables players to pause and review performance using a built-in LCD.
+
+Device Functionality: The system consists of an ICM-20948 9-axis sensor (accelerometer, gyroscope, magnetometer), a SAMW25 microcontroller, an ST7735R LCD, an SD card module, and a switch button, all powered by a Li-Ion battery and mounted on a custom-designed compact PCB. The LCD shows real-time trajectory, the button pauses recording and displays recent swings, and Wi-Fi enables remote data transfer.
+
+Challenges：One of the biggest challenges we encountered was managing memory allocation efficiently within FreeRTOS. Specifically, we struggled with minimizing each task’s `task size` to fit within the limited available memory. Additionally, designing an algorithm to convert raw 9DOF IMU data into an accurate 3D swing model proved complex. These challenges pushed us to deeply understand task scheduling, memory optimization, and coordinate transformation under real-time constraints.
 
 
-Device Functionality
+Prototype Learnings：
+
+Through building and testing this prototype, we gained valuable experience in hardware design and embedded system integration. We learned how to design more debug-friendly PCBs by incorporating jumpers and breakouts, which made testing and troubleshooting significantly easier. We also became much more comfortable using FreeRTOS, particularly in managing concurrent tasks and ensuring time-sensitive operations are handled correctly.
+
+If we rebuilt this device , we would redesign the PCB layout to better fit the physical structure of the tennis racket and select a more reliable and precise IMU sensor. This would improve both mechanical integration and sensor accuracy, ultimately enhancing the overall performance of the device.
 
 
-Challenges
+Next Steps & Takeaways：
+
+Although the device is already functional and well-integrated, one current limitation is the inability to transmit IMU data in real time to external applications like Unity, due to restricted memory. To complete the project and enable full real-time motion replication, we would need to increase available RAM or use more efficient task handling. This would allow us to stream data continuously for live 3D swing visualization.
+
+From ESE5160, we learned the importance of RTOS in embedded development, particularly how to schedule and isolate tasks in real time. We also developed a strong understanding of bootloader structure, firmware update mechanisms, and the complete development cycle of an Internet-connected embedded system—from PCB layout to cloud communication.
 
 
+Project Links：
 
-Prototype Learnings
+Node-Red
 
+http://48.217.65.123:1880/ui
 
-Next Steps & Takeaways
+PCB：
 
-
-Project Links
-
-
+https://upenn-eselabs.365.altium.com/designs/54467BE2-7B2A-4019-87E0-7CC7A92E9B56
 
 
 ## 3. Hardware & Software Requirements
@@ -48,12 +59,12 @@ Hardware Requirements Specification (HRS)
 | HRS 01                   | The system shall use the ICM-20948 sensorfor 9-axis motion tracking.                                      | Sensor data sampled at up to 1.1 kHz.     |             |
 | HRS 02                   | The system shall display metrics in real-time using the ST7735R LCD.                                     | Display refresh rate ≥ 30 FPS.           |             |
 | HRS 03                   | The system shall use the SAMW25 microcontroller to manage data processing and Wi-Fi communication.       | Data transmission latency ≤ 100 ms.      |             |
-| HRS 04                   | The hardware shall be powered by a single-cell Li-Ion battery(3.7V nominal voltage).                     | Battery life ≥ 4 hours.                  |             |
-| HRS 05                   | All components shall be integrated into a custom PCB for compact and portable design.                     | PCB dimensions ≤ 500x500 mm.             |             |
-| HRS 06                   | The system shall include Wi-Fi functionality for data transmission via the SAMW25.                        | Wi-Fi range ≥ 10 meters indoors.         |             |
-| HRS 07                   | The hardware shall include an SD card slot for data storage and retrieval.                               | Data write speed ≥ 3 MB/s.              |             |
-| HRS 08                   | The system shall include a switch button to pause sensor recording and activate review mode on the LCD.  | Button response time ≤ 100 ms.           |             |
-| HRS 09                   | The PCB shall include appropriate voltage regulators to provide 3.3V and 5V as needed for all components. | Voltage output variation ≤ ±0.1V.       |             |
+| HRS 04                   | The hardware shall be powered by a single-cell Li-Ion battery(3.7V nominal voltage).                     | Battery life ≥ 4 hours.                  | YES         |
+| HRS 05                   | All components shall be integrated into a custom PCB for compact and portable design.                     | PCB dimensions ≤ 500x500 mm.             | NO          |
+| HRS 06                   | The system shall include Wi-Fi functionality for data transmission via the SAMW25.                        | Wi-Fi range ≥ 10 meters indoors.         | YES         |
+| HRS 07                   | The hardware shall include an SD card slot for data storage and retrieval.                               | Data write speed ≥ 3 MB/s.              | NO          |
+| HRS 08                   | The system shall include a switch button to pause sensor recording and activate review mode on the LCD.  | Button response time ≤ 100 ms.           | YES         |
+| HRS 09                   | The PCB shall include appropriate voltage regulators to provide 3.3V and 5V as needed for all components. | Voltage output variation ≤ ±0.1V.       | YES         |
 | HRS 10                   | The hardware shall withstand typical tennis swings without detachment or damage.                          | Withstand forces up to 300g acceleration. |             |
 
 
