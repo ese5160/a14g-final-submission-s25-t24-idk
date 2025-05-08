@@ -32,7 +32,7 @@ Although the device is already functional and well-integrated, one current limit
 
 From ESE5160, we learned the importance of RTOS in embedded development, particularly how to schedule and isolate tasks in real time. We also developed a strong understanding of bootloader structure, firmware update mechanisms, and the complete development cycle of an Internet-connected embedded system—from PCB layout to cloud communication.
 
-Project Links：
+Project Links： [https://ese5160.github.io/a14g-final-submission-s25-t24-idk/](https://ese5160.github.io/a14g-final-submission-s25-t24-idk/)
 
 Node-Red
 
