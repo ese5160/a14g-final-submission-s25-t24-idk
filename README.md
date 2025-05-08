@@ -59,13 +59,13 @@ Hardware Requirements Specification (HRS)
 | HRS 09                   | The PCB shall include appropriate voltage regulators to provide 3.3V and 5V as needed for all components. | Voltage output variation ≤ ±0.1V.      | YES         |
 | HRS 10                   | The hardware shall withstand typical tennis swings without detachment or damage.                          | Withstand forces up to 30g acceleration. | YES         |
 
-For HRS 04, 05, 06, 08 the performance can be directly observed by eyes or measured easily.
-HRS 01: We do it by checking the number of data read in 1 second directly in a csv file.
-HRS 02:  This requirement we found it unnecessary as we only want to refresh numerical data on it so we don't have specific requirement on that.
-HRS 03:  Set log timestamps before sending and after receiving data. Calculate the latency and confirm it is  ≤ 100 ms.
-HRS 08:  Record the time between a button press and the corresponding LCD update using timestamps.
-HRS 09:  Use a multimeter and oscilloscope to measure the outputs on your PCB
-HRS 10:  Check the IMU Reading directly after swinging the racket and see if the largest acceleration measured can hold 30g. (But of course we don't need this kind of speed in the end.)
+* For **HRS 04, 05, 06, 08** the performance can be directly observed by eyes or measured easily.
+* **HRS 01**: We do it by checking the number of data read in 1 second directly in a csv file.
+* **HRS 02:**  This requirement we found it unnecessary as we only want to refresh numerical data on it so we don't have specific requirement on that.
+* **HRS 03**:  Set log timestamps before sending and after receiving data. Calculate the latency and confirm it is  ≤ 100 ms.
+* **HRS 08:**  Record the time between a button press and the corresponding LCD update using timestamps.
+* **HRS 09:**  Use a multimeter and oscilloscope to measure the outputs on your PCB.
+* **HRS 10:**  Check the IMU Reading directly after swinging the racket and see if the largest acceleration measured can hold 30g. (But of course we don't need this kind of speed in the end.)
 
 Software Requirements Specification (SRS)
 
@@ -81,11 +81,11 @@ Software Requirements Specification (SRS)
 | SRS 08                   | The software shall simulate the simple swing trajectory on LCD after click the button.                     | LCD update the trajectory within 3 second | NO          |
 | SRS 09                   | The computer software shall simulate the 3D version of swing trajectory.                                  | Simulation within 1 mins                   | YES         |
 
-SRS 02, 03, 04, 07, 09 can be directly visually observed and do not need specific method.
-SRS 01: Using timestamps to get the duration.
-SRS 05; We found it is hard to archieve as it need http knowledge and our stack size is also not large enough for the csv file so we give up this part and use the SD card to transmit the data.
-SRS 06: Same as 01 and this is the part done by our pc.
-SRS 08: We show the trajectory using Unity instead since it is hard to show the orientation of the racket on the LCD while Unity ca build the 3d Model of racket.
+SRS **02, 03, 04, 07, 09** can be directly visually observed and do not need specific method.
+**SRS 01:** We used timestamps to get the duration and check if it meets the requirement.
+**SRS 05**: We found it is hard to archieve as it need http knowledge and our stack size is also not large enough for the csv file so we give up this part and use the SD card to transmit the data.
+**SRS 06**: Same as 01 and this is the part done by our pc.
+**SRS 08**: We show the trajectory using Unity instead since it is hard to show the orientation of the racket on the LCD while Unity ca build the 3d Model of racket.
 
 4. Project Photos & Screenshots
 
