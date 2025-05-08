@@ -59,13 +59,14 @@ Hardware Requirements Specification (HRS)
 | HRS 09                   | The PCB shall include appropriate voltage regulators to provide 3.3V and 5V as needed for all components. | Voltage output variation ≤ ±0.1V.      | YES         |
 | HRS 10                   | The hardware shall withstand typical tennis swings without detachment or damage.                          | Withstand forces up to 30g acceleration. | YES         |
 
-* For **HRS 04, 05, 06, 08** the performance can be directly observed by eyes or measured easily.
-* **HRS 01**: We do it by checking the number of data read in 1 second directly in a csv file.
+* For **HRS 04, 05, 06, 08** the performance can be visually observed or easily measured.
+* **HRS 01**: Performance is verified by measuring the number of data points read per second, using a counter variable to log the data rate.
 * **HRS 02:**  This requirement we found it unnecessary as we only want to refresh numerical data on it so we don't have specific requirement on that.
-* **HRS 03**:  Set log timestamps before sending and after receiving data. Calculate the latency and confirm it is  ≤ 100 ms.
-* **HRS 08:**  Record the time between a button press and the corresponding LCD update using timestamps.
+* **HRS 03**:  Latency is measured by logging timestamps before sending and after receiving data, then calculating the delay to ensure it is ≤ 100 ms.
+* **HRS 07:** Measure the time taken to write a known data size (e.g., 6 MB), then divide size by duration to confirm the write speed exceeds 3 MB/s.
+* **HRS 08:**  Measure the time between a button press and the corresponding LCD update using timestamps.
 * **HRS 09:**  Use a multimeter and oscilloscope to measure the outputs on your PCB.
-* **HRS 10:**  Check the IMU Reading directly after swinging the racket and see if the largest acceleration measured can hold 30g. (But of course we don't need this kind of speed in the end.)
+* **HRS 10:**  Verify IMU performance by checking the peak acceleration after swinging the racket; ensure it can reach 30g, although such high speeds are not required in practice in the end.
 
 Software Requirements Specification (SRS)
 
@@ -74,18 +75,19 @@ Software Requirements Specification (SRS)
 | SRS 01                   | The system shall collect and process motion data from the ICM-20948 sensor.                                 | Data processing within 100 ms.             | YES         |
 | SRS 02                   | The software shall display real-time metrics and trajectory simulations on the ST7735R LCD.                 | Metrics updated at 30 FPS.                 | NO          |
 | SRS 03                   | The system shall pause data recording and display the last recorded data when the switch button is pressed. | Pause functionality response ≤ 100 ms.    | YES         |
-| SRS 04                   | The software shall store swing data on an SD card for later retrieval.                                      | Write speed ≥ 5 MB/s.                     | NO          |
+| SRS 04                   | The software shall store swing data on an SD card for later retrieval.                                      | Write speed ≥ 3 MB/s.                    | NO          |
 | SRS 05                   | The system shall transmit processed data wirelessly using the SAMW25 microcontroller.                       | Wi-Fi latency ≤ 100 ms.                  | NO          |
-| SRS 06                   | The software shall retrieve and display previously stored swing data from the SD card.                      | Data retrieval within 200 ms.              | YO          |
+| SRS 06                   | The software shall retrieve and display previously stored swing data from the SD card.                      | Data retrieval within 200 ms.              | Yes         |
 | SRS 07                   | The software shall indicate system status via the LCD.                                                      | LCD updates within 1 second.               | YES         |
 | SRS 08                   | The software shall simulate the simple swing trajectory on LCD after click the button.                     | LCD update the trajectory within 3 second | NO          |
 | SRS 09                   | The computer software shall simulate the 3D version of swing trajectory.                                  | Simulation within 1 mins                   | YES         |
 
-SRS **02, 03, 04, 07, 09** can be directly visually observed and do not need specific method.
-**SRS 01:** We used timestamps to get the duration and check if it meets the requirement.
-**SRS 05**: We found it is hard to archieve as it need http knowledge and our stack size is also not large enough for the csv file so we give up this part and use the SD card to transmit the data.
-**SRS 06**: Same as 01 and this is the part done by our pc.
-**SRS 08**: We show the trajectory using Unity instead since it is hard to show the orientation of the racket on the LCD while Unity ca build the 3d Model of racket.
+* **SRS** **02, 03, 04, 07, 09** can be directly visually observed and do not need specific method.
+* **SRS 01:** We used timestamps to get the duration and check if it meets the requirement.
+* SRS 04: Verified similarly to HRS 07. The speed didn't reach the requirement but its enoughh for the CSV file.
+* **SRS 05**: This was challenging due to HTTPS requirements and limited stack size for transmitting CSV files, so we opted to use an SD card for data transfer instead.
+* **SRS 06**: Verified similarly to SRS 01, but handled on the PC side.
+* **SRS 08**:We visualized the racket's trajectory using Unity, as displaying 3D orientation on the LCD was impractical and Unity allows building a full 3D model.
 
 4. Project Photos & Screenshots
 
@@ -93,8 +95,6 @@ SRS **02, 03, 04, 07, 09** can be directly visually observed and do not need spe
 
 * Your final project, including any casework or interfacing elements that make up the full project (3D prints, screens, buttons, etc)
   ![1746659186913](image/README/1746659186913.png)
-
-
 * The standalone PCBA, top
 
 ![1746659481838](image/README/1746659481838.png)
@@ -117,8 +117,6 @@ SRS **02, 03, 04, 07, 09** can be directly visually observed and do not need spe
 
 * Node-RED dashboard (screenshot)
   ![1746659541112](image/README/1746659541112.png)
-
-
 * Node-RED backend (screenshot)
 
 ![1746659576082](image/README/1746659576082.png)
